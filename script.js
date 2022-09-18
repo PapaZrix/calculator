@@ -27,18 +27,16 @@ digits.forEach((digit) => {
     })
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
+operators.forEach((operator) => {
+    operator.addEventListener("click", function() {
+        firstNumber = storedNumber;
+        clickedOperator = operator.textContent;
+        previousOperand.textContent = `${storedNumber} ${clickedOperator}`;
+        storedNumber = "";
+        console.log("First number: ", firstNumber);
+        console.log("Operator: ", clickedOperator);
+    })
+});
 
 
 
