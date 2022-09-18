@@ -38,15 +38,18 @@ operators.forEach((operator) => {
     })
 });
 
-
-
-
-
-
-
-
-
-
+equals.addEventListener("click", function(e) {
+    result = operate(parseFloat(firstNumber), parseFloat(storedNumber), clickedOperator)
+    if (clickedOperator == "/" && storedNumber == 0) {
+        result = "ERROR";
+    }
+    if (clickedOperator == "x" && storedNumber == 0) {
+        result = "ERROR";
+    }
+    currentOperand.textContent = result;
+    previousOperand.textContent = `${firstNumber} ${clickedOperator} ${storedNumber}`;
+    storedNumber = result;
+});
 
 
 
