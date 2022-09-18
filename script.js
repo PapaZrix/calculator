@@ -51,28 +51,16 @@ equals.addEventListener("click", function(e) {
     storedNumber = result;
 });
 
+// Clear function 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+clear.addEventListener("click", function(e) {
+    result = "";
+    storedNumber = "";
+    firstNumber = "";
+    clickedOperator = "";
+    currentOperand.textContent = "0";
+    previousOperand.textContent = "";
+})
 
 // Math operators
 function add(x, y) {
