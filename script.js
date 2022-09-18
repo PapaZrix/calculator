@@ -9,7 +9,23 @@ const previousOperand = document.querySelector(".previous-operand");
 const currentOperand = document.querySelector(".current-operand");
 const clear = document.querySelector(".clear");
 
+previousOperand.textContent = "";
+currentOperand.textContent = 0;
 
+let storedNumber = "";
+let clickedOperator = "";
+let firstNumber = "";
+let result = "";
+
+// Basic calculator functions -> first number/operator/second number
+
+digits.forEach((digit) => {
+    digit.addEventListener("click", function(e) {
+        storedNumber += e.target.innerHTML;
+        console.log("Stored number: ", storedNumber);
+        currentOperand.textContent = storedNumber;
+    })
+})
 
 
 
