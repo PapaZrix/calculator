@@ -1,3 +1,3 @@
 # Calculator
 
-Live Demo
+[Live Demo](https://papazrix.github.io/calculator/)
