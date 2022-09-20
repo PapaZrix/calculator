@@ -46,7 +46,7 @@ equals.addEventListener("click", function(e) {
     if (clickedOperator == "x" && storedNumber == 0) {
         result = "ERROR";
     }
-    currentOperand.textContent = result;
+    currentOperand.textContent = roundResult(result);
     previousOperand.textContent = `${firstNumber} ${clickedOperator} ${storedNumber}`;
     storedNumber = result;
 });
@@ -61,6 +61,12 @@ clear.addEventListener("click", function(e) {
     currentOperand.textContent = "0";
     previousOperand.textContent = "";
 })
+
+// Round function 
+
+function roundResult(num) {
+    return Math.round(num * 1000) / 1000
+}
 
 // Math operators
 function add(x, y) {
