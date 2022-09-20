@@ -40,13 +40,13 @@ operators.forEach((operator) => {
 
 equals.addEventListener("click", function(e) {
     result = operate(parseFloat(firstNumber), parseFloat(storedNumber), clickedOperator)
+    currentOperand.textContent = roundResult(result);
     if (clickedOperator == "/" && storedNumber == 0) {
-        result = "ERROR";
+        currentOperand.textContent = "ERROR";
     }
     if (clickedOperator == "x" && storedNumber == 0) {
-        result = "ERROR";
+        currentOperand.textContent = "ERROR";
     }
-    currentOperand.textContent = roundResult(result);
     previousOperand.textContent = `${firstNumber} ${clickedOperator} ${storedNumber}`;
     storedNumber = result;
 });
