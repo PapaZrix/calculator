@@ -1,47 +1,67 @@
-html {
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
+:root {
+    --bg-calculator: #d6d3d1;
+    --bg-clear: #fca5a5;
+    --bg-clear-hover: #f87171;
+    --bg-btn-hover: #e5e7eb;
+    --bg-delete: #0ea5e9;
+    --bg-delete-hover: #7dd3fc;
+    --box-shadow: 0px 0px 10px 1px rgb(0 0 0 / 30%);
+}
+
+html {
+    min-height: 100vh;
+}
+
 body {
-    height: 100vh;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 32px;
+    font-size: 40px;
 }
 
 .main {
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 75vh;
-    padding: 8px;
+    padding: 10px;
 }
 
 .calculator {
-    background-color: #1338BE;
-    width: 300px;
-    padding: 16px;
+    background-color: var(--bg-calculator);
+    width: 350px;
+    padding: 20px;
     border: 2px solid darkslategrey;
-    border-radius: 8px;
+    border-radius: 15px;
+    box-shadow: var(--box-shadow);
 }
 
 .display {
-    height: 60px;
     background-color: azure;
-    margin-bottom: 16px;
-    padding: 8px 16px;
+    margin-bottom: 15px;
+    padding: 15px 25px;
     border: 2px solid darkslategrey;
-    border-radius: 8px;
+    border-radius: 10px;
     text-align: right;
     word-wrap: break-word;
     word-break: break-all;
 }
 
+.previous-operand {
+    min-height: 20px;
+}
+
+.current-operand {
+    min-height: 55px;
+}
+
 .container {
     display: grid;
-    grid-gap: 8px;
+    grid-gap: 10px;
     grid-template-columns: repeat(4, 1fr);
 }
 
@@ -50,17 +70,35 @@ body {
 }
 
 .btn {
-    padding: 16px;
+    padding: 20px;
     border: 2px solid darkslategrey;
-    border-radius: 8px;
+    border-radius: 10px;
+    background-color: azure;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn.digit:hover, .btn.operator:hover, 
+.btn.equals:hover {
+    background-color: var(--bg-btn-hover);
 }
 
 .red {
-    background-color: tomato;
+    background-color: var(--bg-clear);
+    font-size: 20px;
+}
+
+.red:hover {
+    background-color: var(--bg-clear-hover);
 }
 
 .blue {
-    background-color: lightskyblue;
+    background-color: var(--bg-delete);
+    font-size: 20px;
+}
+
+.blue:hover {
+    background-color: var(--bg-delete-hover);
 }
 
 .previous-operand {
