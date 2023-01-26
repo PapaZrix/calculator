@@ -1,99 +1,125 @@
-const wrapper = document.querySelector(".main");
-const calculator = document.querySelector(".calculator")
-const display = document.querySelector(".display");
-const container = document.querySelector(".container");
-const digits = document.querySelectorAll(".digit");
-const operators = document.querySelectorAll(".function");
-const equals = document.querySelector(".equals");
-const previousOperand = document.querySelector(".previous-operand");
-const currentOperand = document.querySelector(".current-operand");
-const clear = document.querySelector(".clear");
-
-previousOperand.textContent = "";
-currentOperand.textContent = 0;
-
-let storedNumber = "";
-let clickedOperator = "";
-let firstNumber = "";
-let result = "";
-
-// Basic calculator functions -> first number/operator/second number
-
-digits.forEach((digit) => {
-    digit.addEventListener("click", function(e) {
-        storedNumber += e.target.innerHTML;
-        console.log("Stored number: ", storedNumber);
-        currentOperand.textContent = storedNumber;
-    })
-})
-
-operators.forEach((operator) => {
-    operator.addEventListener("click", function() {
-        firstNumber = storedNumber;
-        clickedOperator = operator.textContent;
-        previousOperand.textContent = `${storedNumber} ${clickedOperator}`;
-        storedNumber = "";
-        console.log("First number: ", firstNumber);
-        console.log("Operator: ", clickedOperator);
-    })
-});
-
-equals.addEventListener("click", function(e) {
-    result = operate(parseFloat(firstNumber), parseFloat(storedNumber), clickedOperator)
-    currentOperand.textContent = roundResult(result);
-    if (clickedOperator == "/" && storedNumber == 0) {
-        currentOperand.textContent = "ERROR";
+class Calculator {
+    static add(x, y) {
+        return x + y
     }
-    if (clickedOperator == "x" && storedNumber == 0) {
-        currentOperand.textContent = "ERROR";
+
+    static subtract(x, y) {
+        return x - y
     }
-    previousOperand.textContent = `${firstNumber} ${clickedOperator} ${storedNumber}`;
-    storedNumber = result;
-});
 
-// Clear function 
+    static multiply(x, y) {
+        return x * y
+    }
 
-clear.addEventListener("click", function(e) {
-    result = "";
-    storedNumber = "";
-    firstNumber = "";
-    clickedOperator = "";
-    currentOperand.textContent = "0";
-    previousOperand.textContent = "";
-})
+    static divide(x, y) {
+        return x / y
+    }
 
-// Round function 
+    static operate(num1, num2, operator) {
+        switch(operator) {
+            case '+':
+                return this.add(num1, num2)
+            case '-':
+                return this.subtract(num1, num2)
+            case 'x':
+                return this.multiply(num1, num2)
+            case '÷':
+                return this.divide(num1, num2)
+        }
+    }
 
-function roundResult(num) {
-    return Math.round(num * 1000) / 1000
-}
-
-// Math operators
-function add(x, y) {
-    return x + y;
-}
-
-function subtract(x, y) {
-    return x - y;
-}
-
-function multiply(x, y) {
-    return x * y;
-}
-
-function divide(x,y) {
-    return x / y;
-}
-
-function operate(num1, num2, operator) {
-    switch (operator) {
-        case "+":
-            return add(num1, num2);
-        case "-":
-            return subtract(num1, num2);
-        case "x":
-            return multiply(num1, num2);
-        case "/":
-            return divide(num1, num2);
+    static roundResult(num) {
+        return Math.round(num * 1000) / 1000
     }
 }
+
+const UI = (() => {
+    const previousOperand = document.querySelector('.previous-operand');
+    const currentOperand = document.querySelector('.current-operand');
+
+    previousOperand.textContent = '';
+    currentOperand.textContent = 0;
+
+    let storedNumber = '';
+    let clickedOperator = '';
+    let firstNumber = '';
+    let result = '';
+
+    const initButtons = () => {
+        const equalsBtn = document.querySelector('.equals')
+        
+        getFirstNumber()
+        getOperator()
+        equalsBtn.addEventListener('click', getResult)
+        deleteLastNumber()
+        clearAll()
+    }
+
+    const getFirstNumber = () => {
+        const digits = document.querySelectorAll('.digit')
+
+        digits.forEach((digit) => {
+            digit.addEventListener('click', (e) => {
+                storedNumber += e.target.textContent
+                currentOperand.textContent = storedNumber
+            })
+        })
+    }
+
+    const getOperator = () => {
+        const operators = document.querySelectorAll('.operator')
+
+        operators.forEach((operator) => {
+            operator.addEventListener('click', () => {
+                firstNumber = storedNumber
+                clickedOperator = operator.textContent
+                previousOperand.textContent = `${storedNumber} ${clickedOperator}`
+                storedNumber = ''
+            })
+        })
+    }
+
+    const getResult = () => {
+        result = Calculator.operate(parseFloat(firstNumber), parseFloat(storedNumber), clickedOperator)
+        currentOperand.textContent = Calculator.roundResult(result)
+        if ((clickedOperator === '÷' && parseFloat(storedNumber) === 0) || (clickedOperator === 'x' && parseFloat(storedNumber) === 0)) {
+            currentOperand.textContent = 'ERROR'
+        }
+        previousOperand.textContent = `${firstNumber} ${clickedOperator} ${storedNumber}`
+        storedNumber = result
+    }
+
+    const deleteLastNumber = () => {
+        const deleteBtn = document.querySelector('.delete')
+
+        deleteBtn.addEventListener('click', () => {
+            let numberLength = storedNumber.length
+            let newNumber = storedNumber.slice(0, numberLength - 1)
+            storedNumber = newNumber
+            currentOperand.textContent = storedNumber
+            if (currentOperand.textContent === '') {
+                currentOperand.textContent = 0
+            }
+        })
+    }
+
+    const clearAll = () => {
+        const clearBtn = document.querySelector('.clear')
+
+        clearBtn.addEventListener('click', reset)
+    }
+
+    const reset = () => {
+        storedNumber = ''
+        firstNumber = ''
+        result = ''
+        clickedOperator = ''
+        currentOperand.textContent = 0
+        previousOperand.textContent = ''
+    }
+
+    return { initButtons }
+})()
+
+document.addEventListener('DOMContentLoaded', UI.initButtons)
+
